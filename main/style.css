@@ -62,7 +62,6 @@ label {
 /* Information Container Styles */
 .info-container {
   width: 100%;
-  border: 1px solid blue;
   padding: 15px 10px;
 }
 
@@ -71,11 +70,17 @@ label {
   border: 1px solid black;
   width: 80%;
   min-width: 1000px;
-  padding: 15px 5px;
+  padding: 0px 5px;
+  padding-bottom: 15px;
 }
 
 h2 {
   font-size: 30px;
+}
+
+.day-city-info {
+  display: flex;
+  align-items: center;
 }
 
 /* Week Weather Styles */
