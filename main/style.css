@@ -66,6 +66,7 @@ label {
   padding: 15px 10px;
 }
 
+/* Today Weather styles */
 .day-container {
   border: 1px solid black;
   width: 80%;
@@ -75,4 +76,26 @@ label {
 
 h2 {
   font-size: 30px;
+}
+
+/* Week Weather Styles */
+
+.week-container {
+  width: 100%;
+  padding: 15px 5px;
+}
+
+.weekday-container{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  min-width: 1000px;
+  padding: 15px 0px;
+}
+
+.day-card{
+  height: 200px;
+  width: 150px;
+  border: 1px solid black;
+  padding: 15px 5px;
 }
