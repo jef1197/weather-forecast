@@ -79,6 +79,7 @@ function renderDailyWeather (info) {
 // function to render weekly cards to page
 function renderWeeklyWeather (week) { 
   for (var i = 0; i < week.length; i++){ 
+    
     var info = {
       temp : week[i].main.temp,
       wind : week[i].wind.speed,
@@ -86,17 +87,20 @@ function renderWeeklyWeather (week) {
       date : week[i].dt_txt,
       condition : `https://openweathermap.org/img/wn/${week[i].weather[0].icon}.png`
     }
+
     var div = $("<div class='day-card'></div>");
     var pDay = $(`<p>${info.date}</p>`);
     var img = $(`<img id="day-condition" src='${info.condition}' alt=""/>  `);
     var pTemp = $(`<p>Temp: ${info.temp}\xB0C</p>`);
     var pWind = $(`<p>Wind: ${info.wind} KPH</p>`);
     var pHumidity = $(`<p>Humidity: ${info.humidity} %</p>`);
+
     div.append(pDay);
     div.append(img);
     div.append(pTemp);
     div.append(pWind);
     div.append(pHumidity);
+
     $('.weekday-container').append(div);
   }
 }
