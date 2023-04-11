@@ -31,8 +31,9 @@ function searchCity(city) {
   });
 }
 
+// function to get weather using lat and lon of selected city
 function getWeather( lat, lon ) {  
-  var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial${apiKey}`;
+  var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
   fetch(search)
   .then(function (res) {
     if (!res.ok) {
@@ -41,15 +42,19 @@ function getWeather( lat, lon ) {
     return res.json();
   })
   .then(function (data) { 
-
+    console.log(data)
     // get daily forecast 
-    var city = data.city.name;
-    var temp = data.list[0].main.temp;
-    var wind = data.list[0].wind.speed;
-    var humidity = data.list[0].main.humidity;
-    renderDailyWeather(city,temp,wind,humidity);
+    var info = {
+      city: data.city.name,
+      temp : data.list[0].main.temp,
+      wind : data.list[0].wind.speed,
+      humidity : data.list[0].main.humidity,
+      date : data.list[0].dt_txt,
+      condition : `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}.png`
+    }
+    renderDailyWeather(info);
 
-    // Get Weekly forecast
+    // Get Weekly/5-day forecast
     var arr = data.list;
     var timeSearch = "00:00:00"
     // filters array for the start of the next day
@@ -62,14 +67,26 @@ function getWeather( lat, lon ) {
 
 }
 
-function renderDailyWeather (city, temp, wind, humidity) { 
-  console.log('render day weather')
-  // add data to element
+// function to render daily information to pageinfo.
+function renderDailyWeather (info) { 
+  $('#day-city').text(`${info.city} ${info.date}`);
+  $('#day-condition').attr("src",info.condition);
+  $('#day-temp').text(`Temp: ${info.temp}\xB0C`);
+  $('#day-wind').text(`Wind: ${info.wind} KPH`);
+  $('#day-humidity').text(`Humidity: ${info.humidity} %`);
 }
 
+// function to render weekly cards to page
 function renderWeeklyWeather (week) { 
-  console.log('render week weather')
-  // for loop on array
+  for (var i = 0; i < week.length; i++){ 
+    var info = {
+      temp : week[i].main.temp,
+      wind : week[i].wind.speed,
+      humidity : week[i].main.humidity,
+      date : week[i].dt_txt,
+      condition : `https://openweathermap.org/img/wn/${week[i].weather[0].icon}.png`
+    }
+  }
   // create card for each element in array
   // add data from array to elements
   // append elemnt to page
