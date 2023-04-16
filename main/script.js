@@ -1,15 +1,4 @@
 var apiKey = '&appid=623ca1c4df967f2504f330397c76fcb9';
-var citySearch = $('#city-search');
-
-function handleSubmit(e) {
-  e.preventDefault();
-  var city = citySearch.val();
-  if (!city) {
-    console.log('error')
-    return;
-  }
-  searchCity(city);
-}
 
 // function to get latitude and longitude of searched city
 function searchCity(city) { 
@@ -24,7 +13,8 @@ function searchCity(city) {
   .then(function (data) { 
     var lat = data[0].lat;
     var lon = data[0].lon;
-    getWeather(lat,lon);
+    setLocalStorage(lat, lon);
+    getWeather(lat, lon);
   })
   .catch (function (err) { 
     console.log('no city found')
@@ -33,6 +23,7 @@ function searchCity(city) {
 
 // function to get weather using lat and lon of selected city
 function getWeather( lat, lon ) {  
+  renderSearch();
   var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
   fetch(search)
   .then(function (res) {
@@ -42,7 +33,6 @@ function getWeather( lat, lon ) {
     return res.json();
   })
   .then(function (data) { 
-    console.log(data)
     // get daily forecast 
     var info = {
       city: data.city.name,
@@ -58,13 +48,37 @@ function getWeather( lat, lon ) {
     var arr = data.list;
     var timeSearch = "00:00:00"
     // filters array for the start of the next day
-    let weeklyWeather = arr.filter(o => o.dt_txt.includes(timeSearch));
+    let weeklyWeather = arr.filter(object => object.dt_txt.includes(timeSearch));
     renderWeeklyWeather(weeklyWeather);
   })
   .catch (function (err) { 
     console.log(err)
   });
+}
 
+// adds city object to local storage
+function setLocalStorage (lat, lon) {  
+  var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
+  fetch(search)
+  .then(function (res) {
+    if (!res.ok) {
+      throw res.json();
+    }
+    return res.json();
+  })
+  .then(function (data) { 
+    var info = {
+      city: data.city.name,
+      lat: data.city.coord.lat, 
+      lon: data.city.coord.lon,
+    }
+    var searchHistory = getSearch();
+    searchHistory.push(info)
+    setSearch(searchHistory);
+  })
+  .catch (function (err) { 
+    console.log(err)
+  });
 }
 
 // function to render daily information to pageinfo.
@@ -78,6 +92,7 @@ function renderDailyWeather (info) {
 
 // function to render weekly cards to page
 function renderWeeklyWeather (week) { 
+  $('.weekday-container').empty();
   for (var i = 0; i < week.length; i++){ 
     
     var info = {
@@ -105,6 +120,57 @@ function renderWeeklyWeather (week) {
   }
 }
 
-// Local for recent searches
+// renders search history to page
+function renderSearch() {
+  var recentSearches = getSearch();
+  $('.city-container').empty();
+  for(var i = 0; i < recentSearches.length; i++) {
+    var a = $(`<a class='search-history' data-lat='${recentSearches[i].lat}' data-lon='${recentSearches[i].lon}'>${recentSearches[i].city}</a>`);
+    $('.city-container').append(a);
+  }
+}
 
+// Gets the local storage array
+function getSearch() {
+  var localSearch = localStorage.getItem('search');
+  if(localSearch) {
+    localSearch = JSON.parse(localSearch);
+  } else {
+    localSearch= [];
+  }
+  return localSearch;
+}
+
+// Sets the local storage array 
+function setSearch(search) {
+  // if more than 25 results in array remove the first element
+  if (search.length > 25) {
+    search.shift();
+    localStorage.setItem('search', JSON.stringify(search));
+    return;
+  }
+  localStorage.setItem('search', JSON.stringify(search));
+}
+
+// Handles the the button submit when user searches for city
+function handleSubmit(e) {
+  e.preventDefault();
+  var city =  $('#city-search').val();
+  if (!city) {
+    console.log('error')
+    return;
+  }
+  searchCity(city);
+}
+
+// function to handle search history clicks
+function handleClick(e) { 
+  var lat = (e.target.dataset.lat)
+  var lon = (e.target.dataset.lon)
+  getWeather(lat, lon);
+}
+
+renderSearch();
+// Event Listners for submit button / search history links
 $('#submit').on('click', handleSubmit);
+$('.city-container').on('click', '.search-history', handleClick)

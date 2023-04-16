@@ -26,10 +26,9 @@ aside {
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 80vh;
+  height: 90vh;
   min-width: 300px;
   padding: 15px 10px;
-  /* border-right: 1px solid red; */
   overflow: auto;
 }
 
@@ -57,6 +56,11 @@ label {
 .city-container {
   display: flex;
   flex-direction: column;
+}
+
+a {
+  cursor: pointer;
+  padding: 5px;
 }
 
 /* Information Container Styles */
@@ -104,3 +108,4 @@ h2 {
   border: 1px solid black;
   padding: 15px 5px;
 }
+
