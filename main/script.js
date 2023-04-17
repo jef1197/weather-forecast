@@ -104,7 +104,7 @@ function renderWeeklyWeather (week) {
     }
 
     var div = $("<div class='day-card'></div>");
-    var pDay = $(`<p>${info.date}</p>`);
+    var pDay = $(`<p class='week-date'>${info.date}</p>`);
     var img = $(`<img id="day-condition" src='${info.condition}' alt=""/>  `);
     var pTemp = $(`<p>Temp: ${info.temp}\xB0C</p>`);
     var pWind = $(`<p>Wind: ${info.wind} KPH</p>`);
@@ -143,8 +143,8 @@ function getSearch() {
 
 // Sets the local storage array 
 function setSearch(search) {
-  // if more than 25 results in array remove the first element
-  if (search.length > 25) {
+  // if more than 20 results in array remove the first element
+  if (search.length > 20) {
     search.shift();
     localStorage.setItem('search', JSON.stringify(search));
     return;

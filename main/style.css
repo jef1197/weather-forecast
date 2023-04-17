@@ -1,7 +1,8 @@
 /* Header Styles */
 header {
   height: 60px;
-  background-color: aqua;
+  background-color: rgb(112, 39, 172);
+  color: white;
 }
 
 nav {
@@ -22,6 +23,7 @@ main {
 }
 
 /* Aside Styles */
+
 aside {
   display: flex;
   flex-direction: column;
@@ -32,11 +34,12 @@ aside {
   overflow: auto;
 }
 
+/* Search bar styles */
+
 form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
   margin-bottom: 30px;
 }
 
@@ -49,9 +52,23 @@ form::after{
   position: relative;
 }
 
+input {
+  margin: 10px 0px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+input[type='submit'] {
+  background-color: rgb(57, 83, 226);
+  color: white;
+}
+
 label {
   font-size: 30px;
+  font-weight: 700;
 }
+
+/* Search History Styles */
 
 .city-container {
   display: flex;
@@ -61,21 +78,31 @@ label {
 a {
   cursor: pointer;
   padding: 5px;
+  text-align: center;
+  background-color: rgb(180, 178, 178);
+  margin: 5px 0;
+  border-radius: 5px;
 }
 
 /* Information Container Styles */
+
 .info-container {
   width: 100%;
   padding: 15px 10px;
 }
 
 /* Today Weather styles */
+
 .day-container {
   border: 1px solid black;
   width: 80%;
+  height: 160px;
   min-width: 1000px;
   padding: 0px 5px;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 h2 {
@@ -88,6 +115,11 @@ h2 {
 }
 
 /* Week Weather Styles */
+
+h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
 
 .week-container {
   width: 100%;
@@ -102,10 +134,21 @@ h2 {
   padding: 15px 0px;
 }
 
+/* Week Card Styles */
+
 .day-card{
-  height: 200px;
-  width: 150px;
-  border: 1px solid black;
+  height: 220px;
+  width: 170px;
   padding: 15px 5px;
+  background-color: rgb(9, 9, 48);
+  color: white;
+}
+
+.day-card p {
+  margin-bottom: 10px;
+}
+
+.week-date {
+  font-weight: 800;
 }
 
