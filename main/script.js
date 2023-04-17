@@ -58,7 +58,7 @@ function getWeather( lat, lon ) {
 
 // adds city object to local storage
 function setLocalStorage (lat, lon) {  
-  var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
+  var search = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
   fetch(search)
   .then(function (res) {
     if (!res.ok) {
