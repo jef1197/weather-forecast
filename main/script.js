@@ -2,7 +2,7 @@ var apiKey = '&appid=623ca1c4df967f2504f330397c76fcb9';
 
 // function to get latitude and longitude of searched city
 function searchCity(city) { 
-  var search = `http://api.openweathermap.org/geo/1.0/direct?q=${city}${apiKey}`;
+  var search = `https://api.openweathermap.org/geo/1.0/direct?q=${city}${apiKey}`;
   fetch(search)
   .then(function (res) {
     if (!res.ok) {
@@ -24,7 +24,7 @@ function searchCity(city) {
 // function to get weather using lat and lon of selected city
 function getWeather( lat, lon ) {  
   renderSearch();
-  var search = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
+  var search = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric${apiKey}`;
   fetch(search)
   .then(function (res) {
     if (!res.ok) {
